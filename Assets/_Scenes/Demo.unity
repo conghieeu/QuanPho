@@ -1089,6 +1089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f237b23770b764548971d3b5f941ef50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: 0
 --- !u!1 &717860792
 GameObject:
   m_ObjectHideFlags: 0
@@ -1787,6 +1788,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 011799f2e8111f64ebfe049e23ff6412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  players: []
+  customers: []
+  customerSpawnRate: 5
+  spawnTimer: 0
 --- !u!1 &1248605029
 GameObject:
   m_ObjectHideFlags: 0
@@ -2325,6 +2330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b961bd74306c5e344a76ee255dde0b54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableDrag: 0
 --- !u!114 &1627165227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2391,6 +2397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70751c0df7d5a0e49965d324b00d4995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableRaycast: 0
 --- !u!1 &1833024206
 GameObject:
   m_ObjectHideFlags: 0
@@ -3332,5 +3339,5 @@ SceneRoots:
   - {fileID: 621593104}
   - {fileID: 494514890}
   - {fileID: 1374485357}
-  - {fileID: 2061009332}
   - {fileID: 616095980}
+  - {fileID: 2061009332}
