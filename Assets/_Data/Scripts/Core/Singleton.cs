@@ -1,8 +1,7 @@
- using UnityEngine;
+using UnityEngine;
 
 public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-    [Header("Singleton")]
     [SerializeField] private bool _dontDestroyOnLoad;
 
     private static T instance;
@@ -12,7 +11,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         get
         {
             if (instance == null)
-            {  
+            {
                 if (instance == null)
                 {
                     Debug.LogWarning($"Lỗi singleton: đối tượng {typeof(T).Name} không tồn tại");
