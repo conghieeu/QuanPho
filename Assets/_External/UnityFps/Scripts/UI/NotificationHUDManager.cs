@@ -59,5 +59,7 @@ namespace Unity.FPS.UI
         {
             EventManager.RemoveListener<ObjectiveUpdateEvent>(OnObjectiveUpdateEvent);
         }
+
+
     }
 }

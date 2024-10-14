@@ -1,3 +1,19 @@
 {
-	"name": "QuanPho.UI"
+    "name": "QuanPho.UI",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:59c10ca6ce213fb429c34b4c84234c34",
+        "GUID:679f62a7131f1384fab49976e1086433",
+        "GUID:29401cabc3c869a4984b4066b612937f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

@@ -1,5 +1,5 @@
 {
-    "name": "QuanPho.Character",
+    "name": "QuanPho.Actor",
     "rootNamespace": "",
     "references": [
         "GUID:59c10ca6ce213fb429c34b4c84234c34"

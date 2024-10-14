@@ -1,3 +1,19 @@
 {
-	"name": "QuanPho.Editor"
+    "name": "QuanPho.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:59c10ca6ce213fb429c34b4c84234c34",
+        "GUID:679f62a7131f1384fab49976e1086433",
+        "GUID:3818053c581396345a6a83b0be2f5ac7",
+        "GUID:29401cabc3c869a4984b4066b612937f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

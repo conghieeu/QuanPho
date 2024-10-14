@@ -1,69 +1,106 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine; 
+using UnityEngine;
 
 [Serializable]
-public class ItemData
+public class EntityData
 {
-    [SerializeField] string id;
-    [SerializeField] string parentId; 
-    [SerializeField] float price;
-    [SerializeField] EntityType typeID;
-    [SerializeField] Vector3 position;
-    [SerializeField] Quaternion rotation;
-} 
+    public string ID;
+    public string Name;
+    public string ParentID;
+    public EntityType TypeID;
+    public Vector3 Position;
+    public Quaternion Rotation;
+
+    public EntityData()
+    {
+        ID = "";
+        Name = "";
+        ParentID = "";
+        Position = Vector3.zero;
+        TypeID = EntityType.None;
+        Rotation = Quaternion.identity;
+    }
+}
 
 [Serializable]
-public class CustomerData
+public class ItemData : EntityData
 {
-    [SerializeField] string id;
-    [SerializeField] string name;
-    [SerializeField] float totalPay;
-    [SerializeField] bool isNotNeedBuy; 
-    [SerializeField] EntityType typeID;
-    [SerializeField] Vector3 position;
-    [SerializeField] Quaternion rotation;
+    public float Price;
+
+    public ItemData()
+    {
+        Price = 0;
+    }
+}
+
+[Serializable]
+public class CustomerData : EntityData
+{
+    public float TotalPay;
+    public bool IsFinishMission; // co hoan thanh nhiem vu chua
+
+    public CustomerData()
+    {
+        TotalPay = 0;
+        IsFinishMission = false;
+    }
 }
 
 [Serializable]
 public class SettingData
 {
-    [SerializeField] bool isFullScreen;
-    [SerializeField] int qualityIndex;
-    [SerializeField] float masterVolume;
-    [SerializeField] int currentResolutionIndex;
-    [SerializeField] Quaternion camRotation;
+    public bool IsFullScreen;
+    public int QualityIndex;
+    public float MasterVolume;
+    public int CurrentResolutionIndex;
+
+    public SettingData()
+    {
+        IsFullScreen = false;
+        QualityIndex = 0;
+        MasterVolume = 0;
+        CurrentResolutionIndex = 0;
+    }
 }
 
 [Serializable]
 public class PlayerData
 {
-    [SerializeField] float _currentMoney;
-    [SerializeField] int _reputation;
-    [SerializeField] Vector3 _position;
-    [SerializeField] Quaternion _rotation;
+    public float CurrentMoney;
+    public int RatingPoints;
+    public Vector3 Position;
+    public Quaternion Rotation;
+
+    public PlayerData()
+    {
+        CurrentMoney = 0;
+        RatingPoints = 0;
+        Position = Vector3.zero;
+        Rotation = Quaternion.identity;
+    }
 }
 
 [Serializable]
-public class PlayData
+public class GamePlayData
 {
-    [SerializeField] bool isInitialized;
-    [SerializeField] PlayerData playerData;
-    [SerializeField] List<CustomerData> customersData; 
-    [SerializeField] List<ItemData> itemsData;
+    public bool IsInitialized;
+    public PlayerData PlayerData;
+    public List<CustomerData> CustomersData;
+    public List<ItemData> ItemsData;
 }
 
 [Serializable]
-public class UserData
+public class PlayerProfile
 {
-    [SerializeField] string userName;
-    [SerializeField] float timePlay;
+    public SettingData SettingData;
+    public string UserName;
+    public float TimePlay;
 }
 
 [Serializable]
 public class GameData
 {
-    public UserData userData;
-    public SettingData settingData;
-    public PlayData playData;
+    public PlayerProfile PlayerProfile;
+    public GamePlayData GamePlayData;
 }

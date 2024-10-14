@@ -1,3 +1,16 @@
 {
-	"name": "QuanPho.Mechanics"
+    "name": "QuanPho.Mechanics",
+    "rootNamespace": "",
+    "references": [
+        "GUID:59c10ca6ce213fb429c34b4c84234c34"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

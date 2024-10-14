@@ -1,4 +1,4 @@
-using System;
+    using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -37,7 +37,7 @@ public class SaveGame : Singleton<SaveGame>
 
         if (!IsSaveFileExists)
         {
-            GameData.playData = new PlayData();
+            GameData.GamePlayData = new GamePlayData();
         }
         else
         {
@@ -68,7 +68,7 @@ public class SaveGame : Singleton<SaveGame>
 
     public void OnStartNewGame()
     {
-        GameData.playData = new();
+        GameData.GamePlayData = new();
         SaveData();
     }
 
