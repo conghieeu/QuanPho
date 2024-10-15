@@ -7,11 +7,11 @@ public class RaycastCursor : MonoBehaviour
 
      InputImprove inputImprove;
      Camera cam;
-     ItemSelection itemSelection;
+     ItemInteraction itemSelection;
 
      void Start()
      {
-          itemSelection = FindFirstObjectByType<ItemSelection>();
+          itemSelection = FindFirstObjectByType<ItemInteraction>();
           inputImprove = FindFirstObjectByType<InputImprove>();
           cam = Camera.main;
 

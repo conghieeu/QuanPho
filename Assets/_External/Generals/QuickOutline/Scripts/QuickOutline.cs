@@ -89,8 +89,23 @@ public class QuickOutline : MonoBehaviour
 
   private bool needsUpdate;
 
-  void Awake()
+  private void Start()
   {
+    // Update material properties
+    needsUpdate = true;
+
+    // Clear cache when baking is disabled or corrupted
+    if (!precomputeOutline && bakeKeys.Count != 0 || bakeKeys.Count != bakeValues.Count)
+    {
+      bakeKeys.Clear();
+      bakeValues.Clear();
+    }
+
+    // Generate smooth normals when baking is enabled
+    if (precomputeOutline && bakeKeys.Count == 0)
+    {
+      Bake();
+    }
 
     // Cache renderers
     renderers = GetComponentsInChildren<Renderer>();
@@ -107,26 +122,6 @@ public class QuickOutline : MonoBehaviour
 
     // Apply material properties immediately
     needsUpdate = true;
-  }
-
-  void OnValidate()
-  {
-
-    // Update material properties
-    needsUpdate = true;
-
-    // Clear cache when baking is disabled or corrupted
-    if (!precomputeOutline && bakeKeys.Count != 0 || bakeKeys.Count != bakeValues.Count)
-    {
-      bakeKeys.Clear();
-      bakeValues.Clear();
-    }
-
-    // Generate smooth normals when baking is enabled
-    if (precomputeOutline && bakeKeys.Count == 0)
-    {
-      Bake();
-    }
   }
 
   void Update()
@@ -158,12 +153,11 @@ public class QuickOutline : MonoBehaviour
     {
       foreach (var renderer in renderers)
       {
-
         // Remove outline shaders
         var materials = renderer.sharedMaterials.ToList();
 
         materials.Remove(outlineMaskMaterial);
-        materials.Remove(outlineFillMaterial);
+        materials.Remove(outlineFillMaterial); 
 
         renderer.materials = materials.ToArray();
       }
@@ -180,7 +174,6 @@ public class QuickOutline : MonoBehaviour
 
   void Bake()
   {
-
     // Generate smooth normals for each mesh
     var bakedMeshes = new HashSet<Mesh>();
 

@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class InputImprove : MonoBehaviour
 {
+    public InputActionReference UIScrollWheel;
     public InputActionReference UIClick;
     public InputActionReference UIPoint;
     public InputActionReference PlayerMove;
@@ -16,5 +17,10 @@ public class InputImprove : MonoBehaviour
     public Vector2 GetMousePoint()
     {
         return UIPoint.action.ReadValue<Vector2>();
+    }
+
+    public float GetScrollWheel()
+    {
+        return UIScrollWheel.action.ReadValue<float>();
     }
 }
