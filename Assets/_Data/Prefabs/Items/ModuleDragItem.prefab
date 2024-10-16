@@ -51,7 +51,7 @@ MonoBehaviour:
   GridSnap: 1
   EnableSnap: 0
   Models: {fileID: 7287956471332897838}
-  RotationSpeed: 1
+  RotationSpeed: 30
 --- !u!1 &3273741539300231095
 GameObject:
   m_ObjectHideFlags: 0

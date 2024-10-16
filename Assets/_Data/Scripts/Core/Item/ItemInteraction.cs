@@ -6,6 +6,8 @@ public class ItemInteraction : MonoBehaviour
 {
     public ModuleDragItem PrefabModuleDragItem;
 
+    Item itemSelect;
+
     public Item ItemSelect
     {
         get => itemSelect;
@@ -18,16 +20,11 @@ public class ItemInteraction : MonoBehaviour
         }
     }
 
-    Item itemSelect;
-
     [Command]
     /// <summary> Tạo item drag với avatar cua chinh item do </summary>
     public void CreateItemDrag()
     {
-        if (ItemSelect)
-        {
-            Instantiate(PrefabModuleDragItem).OnCreateModule(itemSelect);
-        }
+        Instantiate(PrefabModuleDragItem).OnCreateModule(itemSelect);
     }
 
 }

@@ -1,120 +1,90 @@
-    using System;
+using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class SaveGame : Singleton<SaveGame>
 {
-    [Header("Serialization And Encryption")]
-    [SerializeField] string _saveName = "/gameData.save";
-    [SerializeField] string _filePath; 
-    [SerializeField] bool _isSaveFileExists;
-    [SerializeField] bool _serialize;
-    [SerializeField] bool _usingXML;
-    [SerializeField] bool _encrypt;
-    [SerializeField] GameData _gameData = new GameData();
+    [SerializeField] string saveName = "/gameData.save";
+    [SerializeField] string filePath;
+    [SerializeField] bool isSaveFileExists;
+    [SerializeField] bool serialize;
+    [SerializeField] bool usingXML;
+    [SerializeField] bool encrypt;
+    [SerializeField] GameData gameData = new GameData();
 
-    public bool IsSaveFileExists { get => _isSaveFileExists; private set => _isSaveFileExists = value; }
-    public GameData GameData { get => _gameData; set => _gameData = value; }
-
-    public static event Action ActionSaveData;
-    public static event Action<GameData> ActionSetData;
-    public static event Action ActionDataLoad;
+    public GameData GameData
+    {
+        get
+        {
+            return gameData;
+        }
+        set
+        {
+            gameData = value;
+        }
+    }
 
     protected override void Awake()
     {
         base.Awake();
 
         SetDontDestroyOnLoad(true);
+        filePath = Application.persistentDataPath + saveName;
+    }
 
-        _filePath = Application.persistentDataPath + _saveName;
+    public void SetNewGameData()
+    {
+        GameData = new GameData();
+    }
 
-        IsSaveFileExists = File.Exists(_filePath);
+    public void SetGameDataByLocalData()
+    {
+        GameData = GetLocalData();
+    }
 
-        if (!IsSaveFileExists)
+    public GameData GetLocalData()
+    {
+        if (IsSaveFileExists())
         {
-            GameData.GamePlayData = new GamePlayData();
+            string stringData = File.ReadAllText(filePath);
+            Debug.Log("Game data loaded from: " + filePath);
+            return Deserialized(stringData);
         }
         else
         {
-            LoadFileData();
+            Debug.Log("Save file not found in: " + filePath);
+            return null;
         }
     }
 
-    private void OnEnable()
+    public void SaveGameDataToLocal()
     {
-        SceneManager.sceneLoaded += (scene, mode) =>
-        {
-            LoadData();
-        };
+        File.WriteAllText(filePath, SerializeAndEncrypt(GameData));
+        Debug.Log("Game data saved to: " + filePath);
     }
 
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= (scene, mode) =>
-        {
-            LoadData();
-        };
-    }
-
-    private void OnApplicationQuit()
-    {
-        SaveData();
-    }
-
-    public void OnStartNewGame()
-    {
-        GameData.GamePlayData = new();
-        SaveData();
-    }
-
-    public void SaveData()
-    {
-        ActionSaveData?.Invoke();
-        File.WriteAllText(_filePath, SerializeAndEncrypt(GameData));
-        Debug.Log("Game data saved to: " + _filePath);
-    }
-
-    public void LoadData()
-    {
-        ActionSetData?.Invoke(GameData);
-        ActionDataLoad?.Invoke();
-    }
-
-    public void LoadFileData()
-    {
-        if (File.Exists(_filePath))
-        {
-            string stringData = File.ReadAllText(_filePath);
-
-            GameData = Deserialized(stringData);
-            LoadData();
-            Debug.Log("Game data loaded from: " + _filePath);
-        }
-        else
-        {
-            Debug.LogWarning("Save file not found in: " + _filePath);
-        }
-    }
+    public bool IsSaveFileExists() => File.Exists(filePath);
 
     /// <summary> Let's first serialize and encrypt.... </summary>
     private string SerializeAndEncrypt(GameData gameData)
     {
         string stringData = "";
 
-        if (_serialize)
+        if (serialize)
         {
-            if (_usingXML)
+            if (usingXML)
                 stringData = Utils.SerializeXML<GameData>(gameData);
             else
                 stringData = JsonUtility.ToJson(gameData);
         }
 
-        if (_encrypt)
+        if (encrypt)
         {
             stringData = Utils.EncryptAES(stringData);
         }
@@ -126,7 +96,7 @@ public class SaveGame : Singleton<SaveGame>
     private GameData Deserialized(string stringData)
     {
         // giải mã hoá
-        if (_encrypt)
+        if (encrypt)
         {
             stringData = Utils.DecryptAES(stringData);
         }
@@ -134,9 +104,9 @@ public class SaveGame : Singleton<SaveGame>
         GameData gameData = new GameData();
 
         // đọc tuần tự hoá json hoặc xml
-        if (_serialize)
+        if (serialize)
         {
-            if (_usingXML)
+            if (usingXML)
                 gameData = Utils.DeserializeXML<GameData>(stringData);
             else
                 gameData = JsonUtility.FromJson<GameData>(stringData);

@@ -24,8 +24,9 @@ public class EntityData
 }
 
 [Serializable]
-public class ItemData : EntityData
+public class ItemData
 {
+    public EntityData EntityData;
     public float Price;
 
     public ItemData()
@@ -35,8 +36,9 @@ public class ItemData : EntityData
 }
 
 [Serializable]
-public class CustomerData : EntityData
+public class CustomerData
 {
+    public EntityData EntityData;
     public float TotalPay;
     public bool IsFinishMission; // co hoan thanh nhiem vu chua
 
@@ -65,14 +67,15 @@ public class SettingData
 }
 
 [Serializable]
-public class PlayerData
+public class CharacterData
 {
+    public EntityData EntityData;
     public float CurrentMoney;
     public int RatingPoints;
     public Vector3 Position;
     public Quaternion Rotation;
 
-    public PlayerData()
+    public CharacterData()
     {
         CurrentMoney = 0;
         RatingPoints = 0;
@@ -85,22 +88,43 @@ public class PlayerData
 public class GamePlayData
 {
     public bool IsInitialized;
-    public PlayerData PlayerData;
+    public CharacterData characterData;
     public List<CustomerData> CustomersData;
     public List<ItemData> ItemsData;
+
+    public GamePlayData()
+    {
+        IsInitialized = false;
+        characterData = new CharacterData();
+        CustomersData = new List<CustomerData>();
+        ItemsData = new List<ItemData>();
+    }
 }
 
 [Serializable]
-public class PlayerProfile
+public class PlayerData
 {
     public SettingData SettingData;
     public string UserName;
     public float TimePlay;
+
+    public PlayerData()
+    {
+        SettingData = new SettingData();
+        UserName = "NoName";
+        TimePlay = 0;
+    }
 }
 
 [Serializable]
 public class GameData
 {
-    public PlayerProfile PlayerProfile;
+    public PlayerData PlayerData;
     public GamePlayData GamePlayData;
+
+    public GameData()
+    {
+        PlayerData = new PlayerData();
+        GamePlayData = new GamePlayData();
+    }
 }

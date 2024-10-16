@@ -14,7 +14,7 @@ public class ItemDropChecker : MonoBehaviour
         foreach (var obj in SensorCheckGround.TransformHits)
         {
             if(obj.CompareTag("Ground"))
-            { 
+            {
                 IsHitGround = true;
                 break;
             }

@@ -1,6 +1,7 @@
 
 public interface ISaveData
 {
-    public void LoadData<d>(d data);
-    public d SaveData<d>();
+    public T GetData<T>();
+    public void SetData<T>(T data);
+    public void LoadData<T>();
 }

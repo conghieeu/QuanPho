@@ -5,5 +5,5 @@ using UnityEngine.UIElements;
 
 public class Table : Item, IPointerClickHandler
 {
-
+    
 }

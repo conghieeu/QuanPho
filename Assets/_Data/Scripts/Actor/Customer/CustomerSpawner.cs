@@ -1,16 +1,7 @@
 using UnityEngine;
 
+/// <summary> Đảm nhiệm việc spawn customer ở đâu và như thế nào </summary>
 public class CustomerSpawner : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }

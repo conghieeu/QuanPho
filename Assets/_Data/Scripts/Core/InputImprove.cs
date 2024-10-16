@@ -19,8 +19,8 @@ public class InputImprove : MonoBehaviour
         return UIPoint.action.ReadValue<Vector2>();
     }
 
-    public float GetScrollWheel()
+    public Vector2 GetScrollWheel()
     {
-        return UIScrollWheel.action.ReadValue<float>();
+        return UIScrollWheel.action.ReadValue<Vector2>();
     }
 }

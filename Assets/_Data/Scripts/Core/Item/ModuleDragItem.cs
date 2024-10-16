@@ -10,7 +10,7 @@ public class ModuleDragItem : MonoBehaviour
     public bool EnableSnap;
     public Transform Models;
     public float RotationSpeed = 1;
-
+ 
     NavMeshManager navMeshManager;
     InputImprove inputImprove;
     Item itemDragging;
@@ -21,6 +21,8 @@ public class ModuleDragItem : MonoBehaviour
         raycastCursor = FindFirstObjectByType<RaycastCursor>();
         navMeshManager = FindFirstObjectByType<NavMeshManager>();
         inputImprove = FindFirstObjectByType<InputImprove>();
+
+        inputImprove.UIClick.action.performed += ctx => DropItem();
     }
 
     private void Update()
@@ -32,8 +34,10 @@ public class ModuleDragItem : MonoBehaviour
 
     public void OnCreateModule(Item item)
     {
-        itemDragging = item;
+        if (item == null) return;
 
+        itemDragging = item;
+        item.gameObject.SetActive(false);
         item.QuickOutline.SetActiveOutLine(false);
         Avatar itemAvatar = Instantiate(item.Avatar, transform.position, transform.rotation, Models);
         itemAvatar.QuickOutline.SetActiveOutLine(false);
@@ -51,13 +55,15 @@ public class ModuleDragItem : MonoBehaviour
 
     public void DropItem()
     {
+        if(this == null) return;
+
         if (IsCanDrop())
         {
-            Destroy(this); // Delete model item
-            navMeshManager.RebuildNavMeshes();
             itemDragging.transform.position = transform.position;
             itemDragging.transform.rotation = Models.localRotation;
             itemDragging.gameObject.SetActive(true);
+            navMeshManager.RebuildNavMeshes();
+            Destroy(gameObject);
         }
     }
 
@@ -82,7 +88,7 @@ public class ModuleDragItem : MonoBehaviour
     {
         // Model holder: lấy góc xoay mới
         float currentAngle = Mathf.Round(Models.localEulerAngles.y);
-        float newAngle = currentAngle + (inputImprove.GetScrollWheel() * RotationSpeed);
+        float newAngle = currentAngle + (inputImprove.GetScrollWheel().y * RotationSpeed);
 
         Models.localRotation = Quaternion.Euler(0, newAngle, 0);
     }
