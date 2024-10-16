@@ -31,6 +31,7 @@ public class ItemData
 
     public ItemData()
     {
+        EntityData entityData = new EntityData();
         Price = 0;
     }
 }
@@ -44,6 +45,7 @@ public class CustomerData
 
     public CustomerData()
     {
+        EntityData entityData = new EntityData();
         TotalPay = 0;
         IsFinishMission = false;
     }
@@ -77,6 +79,7 @@ public class CharacterData
 
     public CharacterData()
     {
+        EntityData = new EntityData();
         CurrentMoney = 0;
         RatingPoints = 0;
         Position = Vector3.zero;
@@ -88,14 +91,14 @@ public class CharacterData
 public class GamePlayData
 {
     public bool IsInitialized;
-    public CharacterData characterData;
+    public CharacterData CharacterData;
     public List<CustomerData> CustomersData;
     public List<ItemData> ItemsData;
 
     public GamePlayData()
     {
         IsInitialized = false;
-        characterData = new CharacterData();
+        CharacterData = new CharacterData();
         CustomersData = new List<CustomerData>();
         ItemsData = new List<ItemData>();
     }

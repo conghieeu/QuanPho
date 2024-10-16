@@ -2,7 +2,9 @@
     "name": "QuanPho.Mechanics",
     "rootNamespace": "",
     "references": [
-        "GUID:59c10ca6ce213fb429c34b4c84234c34"
+        "GUID:59c10ca6ce213fb429c34b4c84234c34",
+        "GUID:679f62a7131f1384fab49976e1086433",
+        "GUID:fb24642277b1db2449da7ac148ce939d"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -2,7 +2,8 @@
     "name": "QuanPho.Actor",
     "rootNamespace": "",
     "references": [
-        "GUID:59c10ca6ce213fb429c34b4c84234c34"
+        "GUID:59c10ca6ce213fb429c34b4c84234c34",
+        "GUID:fb24642277b1db2449da7ac148ce939d"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

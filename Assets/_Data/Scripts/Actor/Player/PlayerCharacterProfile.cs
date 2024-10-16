@@ -1,23 +1,24 @@
+using JetBrains.Annotations;
 using UnityEngine;
 
-public class Customer : Entity
+public class PlayerCharacterProfile : Entity
 {
-    public CustomerData CustomerData;
+    public CharacterData CharacterData;
 
     public override void SetData<T>(T data)
     {
-        if (data is CustomerData characterData)
+        if (data is CharacterData characterData)
         {
             base.SetData<EntityData>(characterData.EntityData);
-            CustomerData = characterData;
+            CharacterData = characterData;
         }
     }
 
     public override T GetData<T>()
     {
-        CustomerData.EntityData = base.GetData<EntityData>();
+        CharacterData.EntityData = base.GetData<EntityData>();
 
-        if (CustomerData is T data)
+        if (CharacterData is T data)
         {
             return data;
         }

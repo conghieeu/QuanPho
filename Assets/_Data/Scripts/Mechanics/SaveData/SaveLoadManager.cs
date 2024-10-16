@@ -20,6 +20,7 @@ namespace QuanPho
 
         ItemPooler itemPooler;
         CustomerPooler customerPooler;
+        PlayerCharacterProfile playerCharacterProfile;
 
         public GameData GameData => SaveGame.GameData;
 
@@ -31,7 +32,7 @@ namespace QuanPho
         private void Start()
         {
             if (SaveGame.IsSaveFileExists())
-            { 
+            {
                 SetData();
                 LoadData();
             }
@@ -46,6 +47,7 @@ namespace QuanPho
         void Init()
         {
             SaveGame = GetComponent<SaveGame>();
+            playerCharacterProfile = FindFirstObjectByType<PlayerCharacterProfile>();
             customerPooler = FindFirstObjectByType<CustomerPooler>();
             itemPooler = FindFirstObjectByType<ItemPooler>();
         }
@@ -71,7 +73,7 @@ namespace QuanPho
             }
 
             // set character data
-
+            playerCharacterProfile.SetData(gamePlayData.CharacterData);
         }
 
         private void OnApplicationQuit()
@@ -112,7 +114,7 @@ namespace QuanPho
             GamePlayData gamePlayData = new GamePlayData();
             List<ISaveData> allSaveData = AllISaveData();
 
-            // Get GamePlayData
+            // Get Item Data
             List<ItemData> itemsData = new();
             List<CustomerData> customersData = new();
             foreach (ISaveData data in allSaveData)
@@ -121,11 +123,17 @@ namespace QuanPho
                 {
                     itemsData.Add(itemData);
                 }
+
+                if (data.GetData<CustomerData>() is CustomerData customerData && customerData.EntityData.ID != "")
+                {
+                    customersData.Add(customerData);
+                }
             }
 
             // Get Game Play Data
             gamePlayData.ItemsData = itemsData;
             gamePlayData.CustomersData = customersData;
+            gamePlayData.CharacterData = playerCharacterProfile.CharacterData;
             gamePlayData.IsInitialized = true;
 
             return gamePlayData;

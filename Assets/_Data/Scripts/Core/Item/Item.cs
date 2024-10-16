@@ -20,20 +20,26 @@ public class Item : Entity, IPointerClickHandler
         QuickOutline.SetActiveOutLine(true);
     }
 
+    public override void SetData<T>(T data)
+    {
+        if (data is ItemData itemData)
+        {
+            base.SetData<EntityData>(itemData.EntityData);
+            ItemData = itemData;
+        }
+    }
+
     public override T GetData<T>()
     {
         ItemData.EntityData = base.GetData<EntityData>();
-        return (T)(object)ItemData;
-    }
 
-    public override void SetData<T>(T data)
-    {
-        Debug.Log($"Set 0");
-        if (data is ItemData itemData)
+        if (ItemData is T data)
         {
-            Debug.Log($"Set 1");
-            base.SetData<EntityData>(itemData.EntityData);
-            ItemData = itemData;
+            return data;
+        }
+        else
+        {
+            return default;
         }
     }
 }
