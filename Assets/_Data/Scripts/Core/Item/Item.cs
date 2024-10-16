@@ -1,4 +1,5 @@
 
+using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -27,8 +28,11 @@ public class Item : Entity, IPointerClickHandler
 
     public override void SetData<T>(T data)
     {
-        if(data is ItemData itemData) 
+        Debug.Log($"Set 0");
+        if (data is ItemData itemData)
         {
+            Debug.Log($"Set 1");
+            base.SetData<EntityData>(itemData.EntityData);
             ItemData = itemData;
         }
     }

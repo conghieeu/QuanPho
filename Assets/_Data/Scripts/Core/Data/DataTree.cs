@@ -8,7 +8,7 @@ public class EntityData
     public string ID;
     public string Name;
     public string ParentID;
-    public EntityType TypeID;
+    public TypeID TypeID;
     public Vector3 Position;
     public Quaternion Rotation;
 
@@ -18,7 +18,7 @@ public class EntityData
         Name = "";
         ParentID = "";
         Position = Vector3.zero;
-        TypeID = EntityType.None;
+        TypeID = TypeID.None;
         Rotation = Quaternion.identity;
     }
 }

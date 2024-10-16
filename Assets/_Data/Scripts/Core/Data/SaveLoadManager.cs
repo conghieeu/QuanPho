@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using QFSW.QC;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -10,6 +11,7 @@ namespace QuanPho
     /// <summary> Quảng lý khi nào tải, khi nào load , load cái nào và không load cái nào </summary>
     public class SaveLoadManager : MonoBehaviour
     {
+        public bool IsDataLoaded;
         public SaveGame SaveGame;
 
         public UnityAction OnSaveData;
@@ -21,20 +23,29 @@ namespace QuanPho
 
         public GameData GameData => SaveGame.GameData;
 
+        private void Awake()
+        {
+            Init();
+        }
+
         private void Start()
         {
-            SaveGame = GetComponent<SaveGame>();
-
             if (SaveGame.IsSaveFileExists())
-            {
+            { 
                 SetData();
                 LoadData();
             }
-            else LoadNewGameData();
+            else
+            {
+                LoadNewGameData();
+            }
+
+            SceneManager.sceneLoaded += OnLoadScene;
         }
 
         void Init()
         {
+            SaveGame = GetComponent<SaveGame>();
             customerPooler = FindFirstObjectByType<CustomerPooler>();
             itemPooler = FindFirstObjectByType<ItemPooler>();
         }
@@ -42,11 +53,10 @@ namespace QuanPho
         /// <summary> Tạo ra lại item đã lưu và gáng giá trị Data </summary>
         private void SetData()
         {
-            Init();
             SaveGame.SetGameDataByLocalData();
-            GamePlayData gamePlayData = new GamePlayData();
+            GamePlayData gamePlayData = GameData.GamePlayData;
 
-            if(gamePlayData.IsInitialized == false) return;
+            if (gamePlayData.IsInitialized == false) return;
 
             // Set item Data
             foreach (ItemData itemData in gamePlayData.ItemsData)
@@ -56,27 +66,17 @@ namespace QuanPho
 
             // set customer data
             foreach (var customerData in gamePlayData.CustomersData)
-            { 
-                customerPooler.CreateCustomerByItemData(customerData); 
+            {
+                customerPooler.CreateCustomerByItemData(customerData);
             }
 
             // set character data
-            
-        }
 
-        private void OnEnable()
-        {
-            SceneManager.sceneLoaded += OnLoadScene;
-        }
-
-        private void OnDisable()
-        {
-            SceneManager.sceneLoaded -= OnLoadScene;
         }
 
         private void OnApplicationQuit()
         {
-            SaveGame.SaveGameDataToLocal();
+            SaveGameData();
         }
 
         private void StartNewGamePlay()
@@ -86,7 +86,12 @@ namespace QuanPho
 
         private void LoadData()
         {
+            foreach (var entity in AllISaveData())
+            {
+                entity.LoadData();
+            }
 
+            IsDataLoaded = true;
         }
 
         private void LoadNewGameData()
@@ -95,6 +100,7 @@ namespace QuanPho
             LoadData();
         }
 
+        [Command]
         private void SaveGameData()
         {
             SaveGame.GameData.GamePlayData = GetGamePlayData();
@@ -117,8 +123,10 @@ namespace QuanPho
                 }
             }
 
+            // Get Game Play Data
             gamePlayData.ItemsData = itemsData;
             gamePlayData.CustomersData = customersData;
+            gamePlayData.IsInitialized = true;
 
             return gamePlayData;
         }
@@ -132,7 +140,11 @@ namespace QuanPho
 
         private void OnLoadScene(Scene scene = default, LoadSceneMode mode = default)
         {
-            SaveGameData();
+            Init();
+            if (IsDataLoaded)
+            {
+                // SaveGameData();
+            }
         }
     }
 }

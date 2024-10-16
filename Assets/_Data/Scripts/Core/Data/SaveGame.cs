@@ -12,7 +12,6 @@ public class SaveGame : Singleton<SaveGame>
 {
     [SerializeField] string saveName = "/gameData.save";
     [SerializeField] string filePath;
-    [SerializeField] bool isSaveFileExists;
     [SerializeField] bool serialize;
     [SerializeField] bool usingXML;
     [SerializeField] bool encrypt;

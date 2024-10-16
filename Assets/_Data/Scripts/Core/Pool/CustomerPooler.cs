@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class CustomerPooler : Pooler
+public class CustomerPooler : EntityPooler
 {
     public void CreateCustomerByItemData(CustomerData customerData)
     {
