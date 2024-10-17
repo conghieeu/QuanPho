@@ -26,9 +26,13 @@ public class Entity : MonoBehaviour, ISaveData
 
     public virtual void SetData<T>(T data)
     {
-        if (data is EntityData entityData)
-        { 
+        if (data is EntityData entityData && entityData.ID == EntityData.ID)
+        {
             EntityData = entityData;
+        }
+        else
+        {
+            return;
         }
     }
 

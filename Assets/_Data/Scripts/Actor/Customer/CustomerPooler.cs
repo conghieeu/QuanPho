@@ -3,17 +3,12 @@ using UnityEngine;
 
 public class CustomerPooler : EntityPooler
 {
-    public void CreateCustomerByItemData(CustomerData customerData)
+    public void ReloadItemByItemData(CustomerData customerData)
     {
-        Entity entity = GetEntityByID(customerData.EntityData.ID);
-
-        if (entity) // id co san
+        Entity entity = ReloadEntityByEntityData(customerData.EntityData);
+        if (entity)
         {
-            entity.GetComponent<Customer>().SetData(customerData);
-        }
-        else // id chua co
-        {
-            GetOrCreateObjectPool(customerData.EntityData.TypeID).GetComponent<Customer>().SetData(customerData);
+            entity.GetComponent<Customer>().CustomerData = customerData;
         }
     }
 }

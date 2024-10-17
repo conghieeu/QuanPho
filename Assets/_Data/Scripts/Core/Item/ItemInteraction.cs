@@ -24,7 +24,11 @@ public class ItemInteraction : MonoBehaviour
     /// <summary> Tạo item drag với avatar cua chinh item do </summary>
     public void CreateItemDrag()
     {
-        Instantiate(PrefabModuleDragItem).OnCreateModule(itemSelect);
+        if (itemSelect)
+        {
+            Instantiate(PrefabModuleDragItem).OnCreateModule(itemSelect);
+
+        }
     }
 
 }

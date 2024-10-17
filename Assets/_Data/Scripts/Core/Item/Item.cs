@@ -25,6 +25,7 @@ public class Item : Entity, IPointerClickHandler
         if (data is ItemData itemData)
         {
             base.SetData<EntityData>(itemData.EntityData);
+            Debug.Log($"{itemData.EntityData.ID == EntityData.ID}");
             ItemData = itemData;
         }
     }

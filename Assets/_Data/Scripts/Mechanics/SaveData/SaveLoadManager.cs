@@ -18,10 +18,6 @@ namespace QuanPho
         public UnityAction<GameData> OnSetData;
         public UnityAction OnDataLoad;
 
-        ItemPooler itemPooler;
-        CustomerPooler customerPooler;
-        PlayerCharacterProfile playerCharacterProfile;
-
         public GameData GameData => SaveGame.GameData;
 
         private void Awake()
@@ -47,33 +43,37 @@ namespace QuanPho
         void Init()
         {
             SaveGame = GetComponent<SaveGame>();
-            playerCharacterProfile = FindFirstObjectByType<PlayerCharacterProfile>();
-            customerPooler = FindFirstObjectByType<CustomerPooler>();
-            itemPooler = FindFirstObjectByType<ItemPooler>();
         }
 
         /// <summary> Tạo ra lại item đã lưu và gáng giá trị Data </summary>
         private void SetData()
         {
+            ItemPooler itemPooler = FindFirstObjectByType<ItemPooler>();
+            CustomerPooler customerPooler = FindFirstObjectByType<CustomerPooler>();
+
             SaveGame.SetGameDataByLocalData();
             GamePlayData gamePlayData = GameData.GamePlayData;
+            List<ISaveData> allSaveData = AllISaveData();
 
             if (gamePlayData.IsInitialized == false) return;
 
-            // Set item Data
-            foreach (ItemData itemData in gamePlayData.ItemsData)
+            foreach (ISaveData iSaveData in allSaveData)
             {
-                itemPooler.CreateItemByItemData(itemData);
-            }
+                // Set item Data
+                foreach (ItemData itemData in gamePlayData.ItemsData)
+                {
+                    itemPooler.ReloadItemByItemData(itemData);
+                }
 
-            // set customer data
-            foreach (var customerData in gamePlayData.CustomersData)
-            {
-                customerPooler.CreateCustomerByItemData(customerData);
-            }
+                // set customer data
+                foreach (var customerData in gamePlayData.CustomersData)
+                {
+                    customerPooler.ReloadItemByItemData(customerData);
+                }
 
-            // set character data
-            playerCharacterProfile.SetData(gamePlayData.CharacterData);
+                // set character data 
+                iSaveData.SetData(gamePlayData.CharacterData);
+            }
         }
 
         private void OnApplicationQuit()
@@ -128,12 +128,16 @@ namespace QuanPho
                 {
                     customersData.Add(customerData);
                 }
+
+                if (data.GetData<CharacterData>() is CharacterData characterData && characterData.EntityData.ID != "")
+                {
+                    gamePlayData.CharacterData = characterData;
+                }
             }
 
             // Get Game Play Data
             gamePlayData.ItemsData = itemsData;
             gamePlayData.CustomersData = customersData;
-            gamePlayData.CharacterData = playerCharacterProfile.CharacterData;
             gamePlayData.IsInitialized = true;
 
             return gamePlayData;

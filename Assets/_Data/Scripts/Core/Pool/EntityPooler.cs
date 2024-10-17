@@ -36,6 +36,22 @@ public class EntityPooler : MonoBehaviour
         entity.gameObject.SetActive(false);
     }
 
+    public Entity ReloadEntityByEntityData(EntityData entityData)
+    {
+        Entity entity = GetEntityByID(entityData.ID);
+
+        if (entity) // id co san
+        {
+            entity.GetComponent<Entity>().SetData(entityData);
+        }
+        else // id chua co
+        {
+            GetOrCreateObjectPool(entityData.TypeID).SetData(entityData);
+        }
+
+        return entity;
+    }
+
     /// <summary> Kiểm tra xem pool có chứa entity với ID cụ thể hay không  </summary>
     public virtual bool IsContainEntityByID(string id)
     {

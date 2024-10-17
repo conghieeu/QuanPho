@@ -4,18 +4,12 @@ using UnityEngine;
 /// <summary> Đảm nhiệm việc kiểm soát item và tạo ra item gì </summary>
 public class ItemPooler : EntityPooler
 {
-    public void CreateItemByItemData(ItemData itemData)
+    public void ReloadItemByItemData(ItemData itemData)
     {
-        Entity entity = GetEntityByID(itemData.EntityData.ID); 
-
-        if (entity) // id co san
-        { 
-            entity.GetComponent<Item>().SetData<ItemData>(itemData);
-        }
-        else // id chua co
+        Entity entity = ReloadEntityByEntityData(itemData.EntityData);
+        if (entity)
         {
-            GetOrCreateObjectPool(itemData.EntityData.TypeID).GetComponent<Item>().SetData<ItemData>(itemData);
+            entity.GetComponent<Item>().ItemData = itemData;
         }
-
     }
 }

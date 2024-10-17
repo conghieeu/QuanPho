@@ -10,7 +10,7 @@ public class ModuleDragItem : MonoBehaviour
     public bool EnableSnap;
     public Transform Models;
     public float RotationSpeed = 1;
- 
+
     NavMeshManager navMeshManager;
     InputImprove inputImprove;
     Item itemDragging;
@@ -30,7 +30,7 @@ public class ModuleDragItem : MonoBehaviour
         DragItem();
         RotateModels();
         SetMaterial();
-    } 
+    }
 
     public void OnCreateModule(Item item)
     {
@@ -55,7 +55,7 @@ public class ModuleDragItem : MonoBehaviour
 
     public void DropItem()
     {
-        if(this == null) return;
+        if (this == null) return;
 
         if (IsCanDrop())
         {
@@ -78,7 +78,7 @@ public class ModuleDragItem : MonoBehaviour
             float sZ = Mathf.Round(mouseRayHitPoint.z / GridSnap) * GridSnap + TileOffset.z;
             float sY = Mathf.Round(mouseRayHitPoint.y / GridSnap) * GridSnap + TileOffset.y;
             mouseRayHitPoint = new Vector3(sX, sY, sZ);
-        } 
+        }
 
         transform.position = mouseRayHitPoint;
     }
