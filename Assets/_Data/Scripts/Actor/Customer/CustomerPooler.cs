@@ -9,11 +9,11 @@ public class CustomerPooler : EntityPooler
 
         if (entity) // id co san
         {
-            entity.GetComponent<Customer>().SetData<CustomerData>(customerData);
+            entity.GetComponent<Customer>().SetData(customerData);
         }
         else // id chua co
         {
-            GetOrCreateObjectPool(customerData.EntityData.TypeID).GetComponent<Item>().SetData<CustomerData>(customerData);
+            GetOrCreateObjectPool(customerData.EntityData.TypeID).GetComponent<Customer>().SetData(customerData);
         }
     }
 }
