@@ -28,6 +28,8 @@ public class Entity : MonoBehaviour, ISaveData
         if (data is EntityData entityData)
         {
             EntityData = entityData;
+            transform.position = entityData.Position;
+            transform.rotation = entityData.Rotation;
         }
         else
         {
@@ -37,9 +39,6 @@ public class Entity : MonoBehaviour, ISaveData
 
     public virtual void LoadData()
     {
-        transform.position = EntityData.Position;
-        transform.rotation = EntityData.Rotation;
-
         if (EntityData.ParentID != "")
         {
             Debug.Log("Thong bao can thuc hien set item cha cho item nay", transform);

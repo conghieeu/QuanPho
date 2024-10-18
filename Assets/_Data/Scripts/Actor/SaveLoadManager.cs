@@ -6,8 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-namespace QuanPho
-{
+ 
     /// <summary> Quảng lý khi nào tải, khi nào load , load cái nào và không load cái nào </summary>
     public class SaveLoadManager : MonoBehaviour
     {
@@ -93,8 +92,9 @@ namespace QuanPho
             {
                 entity.LoadData();
             }
-
+            
             IsDataLoaded = true;
+            OnDataLoad?.Invoke();
         } 
 
 
@@ -157,5 +157,4 @@ namespace QuanPho
                 // SaveGameData();
             }
         }
-    }
-}
+    } 

@@ -13,8 +13,8 @@ public class PlayerInteractItem : MonoBehaviour
 
     InputImprove inputImprove;
     Transform avatarItemDrag;
-
-    Item itemSelecting;
+    Item itemSelecting; 
+    NavMeshManager navMeshManager;
 
     public Item ItemSelect
     {
@@ -24,7 +24,6 @@ public class PlayerInteractItem : MonoBehaviour
             if (itemSelecting) itemSelecting.QuickOutline.SetActiveOutLine(false);
             if (value) value.QuickOutline.SetActiveOutLine(true);
 
-
             itemSelecting = value;
         }
     }
@@ -32,6 +31,7 @@ public class PlayerInteractItem : MonoBehaviour
     private void Start()
     {
         inputImprove = FindFirstObjectByType<InputImprove>();
+        navMeshManager = FindFirstObjectByType<NavMeshManager>();
 
         inputImprove.UIClick.action.performed += ctx => DropItemSelecting();
     }
@@ -42,6 +42,9 @@ public class PlayerInteractItem : MonoBehaviour
         {
             ModuleItemDragging.DropItem();
             Destroy(avatarItemDrag.gameObject);
+
+            // rebuild AI surface
+            navMeshManager.RebuildNavMeshes();
         }
     }
 

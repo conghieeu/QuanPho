@@ -49,7 +49,7 @@ MonoBehaviour:
   RedMaterial: {fileID: 2100000, guid: c3d7dc789a8fadc4bb0cf386a4e1bb06, type: 2}
   TileOffset: {x: 0, y: 0, z: 0}
   GridSnap: 1
-  EnableSnap: 0
+  EnableSnap: 1
   Model: {fileID: 7287956471332897838}
   RotationSpeed: 30
 --- !u!1 &3273741539300231095
