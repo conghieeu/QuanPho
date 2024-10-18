@@ -39,17 +39,14 @@ public class EntityPooler : MonoBehaviour
     public Entity ReloadEntityByEntityData(EntityData entityData)
     {
         Entity entity = GetEntityByID(entityData.ID);
-
         if (entity) // id co san
-        {
-            entity.GetComponent<Entity>().SetData(entityData);
+        { 
+            return entity;
         }
         else // id chua co
-        {
-            GetOrCreateObjectPool(entityData.TypeID).SetData(entityData);
+        { 
+            return GetOrCreateObjectPool(entityData.TypeID);
         }
-
-        return entity;
     }
 
     /// <summary> Kiểm tra xem pool có chứa entity với ID cụ thể hay không  </summary>
@@ -106,13 +103,13 @@ public class EntityPooler : MonoBehaviour
 
     /// <summary> Tạo entity mới </summary>
     private Entity CreateNewEntity(TypeID typeID)
-    {
+    { 
         foreach (var prefab in prefabs)
         {
             Entity entity = prefab.GetComponent<Entity>();
 
             if (entity && entity.EntityData.TypeID == typeID)
-            {
+            { 
                 entity = Instantiate(entity, transform);
                 Entities.Add(entity);
                 return entity;

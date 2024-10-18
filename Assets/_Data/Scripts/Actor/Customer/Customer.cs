@@ -14,16 +14,12 @@ public class Customer : Entity
     }
 
     public override T GetData<T>()
-    {
-        CustomerData.EntityData = base.GetData<EntityData>();
-
-        if (CustomerData is T data)
+    { 
+        if (typeof(T) == typeof(CustomerData))
         {
-            return data;
+            CustomerData.EntityData = base.GetData<EntityData>(); 
+            return (T)(object)CustomerData;
         }
-        else
-        {
-            return default;
-        }
+        return default;
     }
 }

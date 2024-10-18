@@ -8,21 +8,21 @@ public class ModuleDragItem : MonoBehaviour
     public Vector3 TileOffset;
     public float GridSnap = 1;
     public bool EnableSnap;
-    public Transform Models;
+    public Transform Model;
     public float RotationSpeed = 1;
 
     NavMeshManager navMeshManager;
     InputImprove inputImprove;
     Item itemDragging;
-    RaycastCursor raycastCursor;
+    PlayerCursorRay raycastCursor;
+    ItemDropChecker itemDropChecker;
 
     private void Start()
     {
-        raycastCursor = FindFirstObjectByType<RaycastCursor>();
+        raycastCursor = FindFirstObjectByType<PlayerCursorRay>();
         navMeshManager = FindFirstObjectByType<NavMeshManager>();
         inputImprove = FindFirstObjectByType<InputImprove>();
-
-        inputImprove.UIClick.action.performed += ctx => DropItem();
+        itemDropChecker = GetComponentInChildren<ItemDropChecker>(); 
     }
 
     private void Update()
@@ -39,18 +39,17 @@ public class ModuleDragItem : MonoBehaviour
         itemDragging = item;
         item.gameObject.SetActive(false);
         item.QuickOutline.SetActiveOutLine(false);
-        Avatar itemAvatar = Instantiate(item.Avatar, transform.position, transform.rotation, Models);
-        itemAvatar.QuickOutline.SetActiveOutLine(false);
+        Instantiate(item.Avatar, transform.position, transform.rotation, Model);
     }
 
     /// <summary> Button quay item drag sẽ gọi </summary>
     public void OnClickRotation(float angle)
     {
-        float currentAngle = Models.localEulerAngles.y;
+        float currentAngle = Model.localEulerAngles.y;
         float roundedAngle = Mathf.Round(currentAngle / 10.0f) * 10.0f;
         float rotationAngle = Mathf.Round(angle * RotationSpeed / 10.0f) * 10.0f;
         float newAngle = roundedAngle + rotationAngle;
-        Models.localRotation = Quaternion.Euler(0, newAngle, 0);
+        Model.localRotation = Quaternion.Euler(0, newAngle, 0);
     }
 
     public void DropItem()
@@ -60,7 +59,7 @@ public class ModuleDragItem : MonoBehaviour
         if (IsCanDrop())
         {
             itemDragging.transform.position = transform.position;
-            itemDragging.transform.rotation = Models.localRotation;
+            itemDragging.transform.rotation = Model.localRotation;
             itemDragging.gameObject.SetActive(true);
             navMeshManager.RebuildNavMeshes();
             Destroy(gameObject);
@@ -87,10 +86,10 @@ public class ModuleDragItem : MonoBehaviour
     private void RotateModels()
     {
         // Model holder: lấy góc xoay mới
-        float currentAngle = Mathf.Round(Models.localEulerAngles.y);
+        float currentAngle = Mathf.Round(Model.localEulerAngles.y);
         float newAngle = currentAngle + (inputImprove.GetScrollWheel().y * RotationSpeed);
 
-        Models.localRotation = Quaternion.Euler(0, newAngle, 0);
+        Model.localRotation = Quaternion.Euler(0, newAngle, 0);
     }
 
     private void SetMaterial()
@@ -102,7 +101,7 @@ public class ModuleDragItem : MonoBehaviour
             material = RedMaterial;
         }
 
-        foreach (Renderer model in Models.GetComponentsInChildren<Renderer>())
+        foreach (Renderer model in Model.GetComponentsInChildren<Renderer>())
         {
             model.material = material;
         }
@@ -110,6 +109,7 @@ public class ModuleDragItem : MonoBehaviour
 
     private bool IsCanDrop()
     {
-        return GetComponentInChildren<ItemDropChecker>().IsAgreeToDrag();
+        if (itemDropChecker && itemDropChecker.IsAgreeToDrag()) return true;
+        return false;
     }
 }

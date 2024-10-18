@@ -8,7 +8,7 @@ public class CustomerPooler : EntityPooler
         Entity entity = ReloadEntityByEntityData(customerData.EntityData);
         if (entity)
         {
-            entity.GetComponent<Customer>().CustomerData = customerData;
+            entity.GetComponent<Customer>().SetData(customerData);
         }
     }
 }

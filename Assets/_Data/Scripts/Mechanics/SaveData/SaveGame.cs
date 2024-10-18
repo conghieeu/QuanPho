@@ -35,12 +35,7 @@ public class SaveGame : Singleton<SaveGame>
 
         SetDontDestroyOnLoad(true);
         filePath = Application.persistentDataPath + saveName;
-    }
-
-    public void SetNewGameData()
-    {
-        GameData = new GameData();
-    }
+    } 
 
     public void SetGameDataByLocalData()
     {
@@ -68,7 +63,15 @@ public class SaveGame : Singleton<SaveGame>
         Debug.Log("Game data saved to: " + filePath);
     }
 
-    public bool IsSaveFileExists() => File.Exists(filePath);
+    public bool IsSaveFileExists()
+    {
+        if(File.Exists(filePath))
+        {
+            GameData = new GameData();
+            return true;
+        }
+        return false;
+    }
 
     /// <summary> Let's first serialize and encrypt.... </summary>
     private string SerializeAndEncrypt(GameData gameData)

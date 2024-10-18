@@ -73,17 +73,13 @@ public class CharacterData
 {
     public EntityData EntityData;
     public float CurrentMoney;
-    public int RatingPoints;
-    public Vector3 Position;
-    public Quaternion Rotation;
+    public int RatingPoints; 
 
     public CharacterData()
     {
         EntityData = new EntityData();
         CurrentMoney = 0;
-        RatingPoints = 0;
-        Position = Vector3.zero;
-        Rotation = Quaternion.identity;
+        RatingPoints = 0; 
     }
 }
 

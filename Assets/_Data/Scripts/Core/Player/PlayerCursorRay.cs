@@ -1,17 +1,17 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class RaycastCursor : MonoBehaviour
+public class PlayerCursorRay : MonoBehaviour
 { 
      public LayerMask LayerMask;
 
      InputImprove inputImprove;
      Camera cam;
-     ItemInteraction itemSelection;
+     PlayerInteractItem itemSelection;
 
      void Start()
      {
-          itemSelection = FindFirstObjectByType<ItemInteraction>();
+          itemSelection = FindFirstObjectByType<PlayerInteractItem>();
           inputImprove = FindFirstObjectByType<InputImprove>();
           cam = Camera.main;
 

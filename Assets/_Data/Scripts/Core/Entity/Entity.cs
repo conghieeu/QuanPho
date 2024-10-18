@@ -16,7 +16,6 @@ public class Entity : MonoBehaviour, ISaveData
         gameObject.SetActive(false);
     }
 
-
     public virtual T GetData<T>()
     {
         EntityData.Position = transform.position;
@@ -26,7 +25,7 @@ public class Entity : MonoBehaviour, ISaveData
 
     public virtual void SetData<T>(T data)
     {
-        if (data is EntityData entityData && entityData.ID == EntityData.ID)
+        if (data is EntityData entityData)
         {
             EntityData = entityData;
         }

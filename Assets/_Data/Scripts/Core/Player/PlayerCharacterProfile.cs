@@ -9,22 +9,18 @@ public class PlayerCharacterProfile : Entity
     {
         if (data is CharacterData characterData)
         {
-            base.SetData<EntityData>(characterData.EntityData);
+            base.SetData(characterData.EntityData);
             CharacterData = characterData;
         }
     }
 
     public override T GetData<T>()
-    {
-        CharacterData.EntityData = base.GetData<EntityData>();
-
-        if (CharacterData is T data)
+    { 
+        if (typeof(T) == typeof(CharacterData))
         {
-            return data;
+            CharacterData.EntityData = base.GetData<EntityData>(); 
+            return (T)(object)CharacterData;
         }
-        else
-        {
-            return default;
-        }
+        return default;
     }
 }

@@ -7,8 +7,8 @@ public class InputImprove : MonoBehaviour
     public InputActionReference UIClick;
     public InputActionReference UIPoint;
     public InputActionReference PlayerMove;
-    public InputSystem_Actions InputActions;
-
+    public InputSystem_Actions InputActions; 
+ 
     public Vector2 GetMoveVector()
     {
         return PlayerMove.action.ReadValue<Vector2>();

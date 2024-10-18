@@ -29,15 +29,17 @@ namespace QuanPho
         {
             if (SaveGame.IsSaveFileExists())
             {
-                SetData();
-                LoadData();
-            }
-            else
-            {
-                LoadNewGameData();
-            }
+                LoadExistGameData();
+            } 
 
             SceneManager.sceneLoaded += OnLoadScene;
+        }
+
+        [Command("/Save/LoadExistGameData")]
+        private void LoadExistGameData()
+        {
+            SetData();
+            LoadData();
         }
 
         void Init()
@@ -50,6 +52,7 @@ namespace QuanPho
         {
             ItemPooler itemPooler = FindFirstObjectByType<ItemPooler>();
             CustomerPooler customerPooler = FindFirstObjectByType<CustomerPooler>();
+            PlayerCharacterProfile playerCharacterProfile = FindFirstObjectByType<PlayerCharacterProfile>();
 
             SaveGame.SetGameDataByLocalData();
             GamePlayData gamePlayData = GameData.GamePlayData;
@@ -57,23 +60,21 @@ namespace QuanPho
 
             if (gamePlayData.IsInitialized == false) return;
 
-            foreach (ISaveData iSaveData in allSaveData)
+            // Set item Data
+            foreach (ItemData itemData in gamePlayData.ItemsData)
             {
-                // Set item Data
-                foreach (ItemData itemData in gamePlayData.ItemsData)
-                {
-                    itemPooler.ReloadItemByItemData(itemData);
-                }
-
-                // set customer data
-                foreach (var customerData in gamePlayData.CustomersData)
-                {
-                    customerPooler.ReloadItemByItemData(customerData);
-                }
-
-                // set character data 
-                iSaveData.SetData(gamePlayData.CharacterData);
+                itemPooler.ReloadItemByItemData(itemData);
             }
+
+            // set customer data
+            foreach (var customerData in gamePlayData.CustomersData)
+            {
+                customerPooler.ReloadItemByItemData(customerData);
+            }
+
+            // set character data 
+            playerCharacterProfile.SetData(gamePlayData.CharacterData);
+
         }
 
         private void OnApplicationQuit()
@@ -94,15 +95,10 @@ namespace QuanPho
             }
 
             IsDataLoaded = true;
-        }
+        } 
 
-        private void LoadNewGameData()
-        {
-            SaveGame.SetNewGameData();
-            LoadData();
-        }
 
-        [Command]
+        [Command("/Save/SaveGameData")]
         private void SaveGameData()
         {
             SaveGame.GameData.GamePlayData = GetGamePlayData();
@@ -119,17 +115,20 @@ namespace QuanPho
             List<CustomerData> customersData = new();
             foreach (ISaveData data in allSaveData)
             {
-                if (data.GetData<ItemData>() is ItemData itemData && itemData.EntityData.ID != "")
+                ItemData itemData = data.GetData<ItemData>();
+                if (itemData != null && itemData.EntityData.ID != "")
                 {
                     itemsData.Add(itemData);
                 }
 
-                if (data.GetData<CustomerData>() is CustomerData customerData && customerData.EntityData.ID != "")
+                CustomerData customerData = data.GetData<CustomerData>();
+                if (customerData != null && customerData.EntityData.ID != "")
                 {
                     customersData.Add(customerData);
                 }
 
-                if (data.GetData<CharacterData>() is CharacterData characterData && characterData.EntityData.ID != "")
+                CharacterData characterData = data.GetData<CharacterData>();
+                if (characterData != null && characterData.EntityData.ID != "")
                 {
                     gamePlayData.CharacterData = characterData;
                 }

@@ -67,6 +67,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcf14d2d54ec4b94e87f602234122eb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EntityData:
+    ID: 
+    Name: 
+    ParentID: 
+    TypeID: 1
+    Position: {x: 0, y: 0, z: 0}
+    Rotation: {x: 0, y: 0, z: 0, w: 1}
+  IsRecyclable: 0
+  ItemData:
+    EntityData:
+      ID: 
+      Name: 
+      ParentID: 
+      TypeID: 1
+      Position: {x: 0, y: 0, z: 0}
+      Rotation: {x: 0, y: 0, z: 0, w: 1}
+    Price: 0
   QuickOutline: {fileID: 1793185514629125010}
   Avatar: {fileID: 3883481854755602280}
 --- !u!1 &3285244645678781324

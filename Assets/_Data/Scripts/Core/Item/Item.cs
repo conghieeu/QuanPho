@@ -24,23 +24,18 @@ public class Item : Entity, IPointerClickHandler
     {
         if (data is ItemData itemData)
         {
-            base.SetData<EntityData>(itemData.EntityData);
-            Debug.Log($"{itemData.EntityData.ID == EntityData.ID}");
+            base.SetData(itemData.EntityData);
             ItemData = itemData;
         }
     }
 
     public override T GetData<T>()
-    {
-        ItemData.EntityData = base.GetData<EntityData>();
-
-        if (ItemData is T data)
+    { 
+        if (typeof(T) == typeof(ItemData))
         {
-            return data;
+            ItemData.EntityData = base.GetData<EntityData>(); 
+            return (T)(object)ItemData;
         }
-        else
-        {
-            return default;
-        }
+        return default;
     }
 }

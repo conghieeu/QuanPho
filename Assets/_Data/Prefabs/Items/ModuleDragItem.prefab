@@ -50,7 +50,7 @@ MonoBehaviour:
   TileOffset: {x: 0, y: 0, z: 0}
   GridSnap: 1
   EnableSnap: 0
-  Models: {fileID: 7287956471332897838}
+  Model: {fileID: 7287956471332897838}
   RotationSpeed: 30
 --- !u!1 &3273741539300231095
 GameObject:
@@ -62,7 +62,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7287956471332897838}
   m_Layer: 0
-  m_Name: Models
+  m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

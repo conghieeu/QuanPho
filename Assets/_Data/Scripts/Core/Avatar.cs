@@ -8,11 +8,10 @@ public class Avatar : MonoBehaviour
     public Transform Models;
     public QuickOutline QuickOutline;
 
-    private void OnValidate()
+    private void Start()
     {
         QuickOutline = GetComponent<QuickOutline>();
     }
-
   
     public List<Mesh> GetAllChildMeshes()
     {
